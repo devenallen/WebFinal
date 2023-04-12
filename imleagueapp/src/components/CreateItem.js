@@ -1,43 +1,85 @@
 import { useState } from 'react';
+import Card from './Card';
+import './CreateItem.css';
 
 function CreateItem() {
-  const [itemName, setItemName] = useState('');
-  const [itemDescription, setItemDescription] = useState('');
+  const [teamname, setTeamname] = useState('');
+  const [numPlayers, setNumPlayers] = useState('');
+  const [captain, setCaptain] = useState('');
+  const [logo, setLogo] = useState('');
 
-  const handleItemNameChange = (event) => {
-    setItemName(event.target.value);
+  const handleTeamnameChange = (event) => {
+    setTeamname(event.target.value);
   };
 
-  const handleItemDescriptionChange = (event) => {
-    setItemDescription(event.target.value);
+  const handleNumPlayersChange = (event) => {
+    setNumPlayers(event.target.value);
+  };
+
+  const handleCaptainChange = (event) => {
+    setCaptain(event.target.value);
+  };
+
+  const handleLogoChange = (event) => {
+    setLogo(event.target.value);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // perform form submission or API call to create new item
+    // perform login or signup logic here
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label htmlFor="item-name">Item Name:</label>
-        <input
-          id="item-name"
-          type="text"
-          value={itemName}
-          onChange={handleItemNameChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="item-description">Item Description:</label>
-        <textarea
-          id="item-description"
-          value={itemDescription}
-          onChange={handleItemDescriptionChange}
-        />
-      </div>
-      <button type="submit">Create Item</button>
-    </form>
+    <div>
+      <h1>Create New Team</h1>
+    <Card className="create-team">
+       <form className="overallform" onSubmit={handleSubmit}>
+          <div className="createform">
+              <label htmlFor="teamname">Team name: </label>
+              <input
+                  id="teamname"
+                  type="teamname"
+                  value={teamname}
+                  onChange={handleTeamnameChange}
+              />
+          </div>
+          <div className="createform">
+              <label htmlFor="numplayers">Number of Players: </label>
+              <input
+                  id="numplayers"
+                  type="numplayers"
+                  placeholder= ""
+                  value={numPlayers}
+                  onChange={handleNumPlayersChange}
+              />
+          </div>
+          <div className="createform">
+              <label htmlFor="captain">Team Captain: </label>
+              <input
+                  id="captain"
+                  type="captain"
+                  placeholder= ""
+                  value={captain}
+                  onChange={handleCaptainChange}
+              />
+          </div>
+          <div className="createform">
+              <label htmlFor="logo">Select Logo: </label>
+              <input
+                  id="logo"
+                  type="logo"
+                  placeholder= ""
+                  value={logo}
+                  onChange={handleLogoChange}
+              />
+          </div>
+          <div className="button">
+            <button className="createbutton" type="submit">Create Team</button>
+
+          </div>
+        </form> 
+    </Card>
+  </div>
   );
 }
 

@@ -1,9 +1,9 @@
+import './EditItem.css';
 import { useState } from 'react';
 import Card from './Card';
-import './LoginSignupPage.css';
 
-function LoginSignupPage() {
-  const [username, setUsername] = useState('');
+function EditItem(props) {
+    const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
 
   const handleUsernameChange = (event) => {
@@ -19,8 +19,9 @@ function LoginSignupPage() {
     // perform login or signup logic here
   };
 
-  return (
-    <div>
+  
+    return (
+        <div>
       <Card className="login-signup">
         <h1>User Login Page</h1>
          <form onSubmit={handleSubmit}>
@@ -55,8 +56,7 @@ function LoginSignupPage() {
           </form> 
       </Card>
     </div>
-
-  );
+    );
 }
 
-export default LoginSignupPage;
+export default EditItem;

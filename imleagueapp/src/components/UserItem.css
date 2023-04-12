@@ -19,6 +19,16 @@
     flex: 1;
   } */
 
+  .linkinfo {
+    color: black;
+    text-decoration: none;
+  }
+
+  .linkinfo:hover {
+    color: darkred;
+  }
+
+  
   .user-item__content {
     display: flex;
     flex-direction: column;
@@ -41,6 +51,9 @@
     object-fit: contain;
   }
   
+  .user-item__info {
+    width:100%;
+  }
   
   .user-item__info h2 {
     margin: 0.5rem 0;
