@@ -1,4 +1,4 @@
-import './Users.css';
+import './css/Users.css';
 import UserItem from './UserItem';
 
 function Users(props) {
@@ -13,6 +13,8 @@ function Users(props) {
           id={user.id}
           name={user.name}
           image={user.image}
+          captain={user.captain}
+          numPlayers={user.numPlayers}
           onEditUser={handleEditUser} // This may not be needed
         />
       ))}
