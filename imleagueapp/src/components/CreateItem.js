@@ -8,6 +8,7 @@ function CreateItem() {
   const [numPlayers, setNumPlayers] = useState('');
   const [captain, setCaptain] = useState('');
   const [logo, setLogo] = useState('');
+  
 
   const handleTeamnameChange = (event) => {
     setTeamname(event.target.value);
@@ -27,7 +28,7 @@ function CreateItem() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // perform login or signup logic here
+    
   };
 
   return (

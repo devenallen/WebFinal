@@ -1,6 +1,5 @@
 import './App.css';
-// import { useState } from 'react';
-// import { Link } from "react-router-dom";
+import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginSignupPage from "./components/LoginSignupPage";
 import CreateItem from "./components/CreateItem";
@@ -10,18 +9,30 @@ import ViewItem from "./components/ViewItem";
 import props from './components/UserItem';
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  // the handle login function which changes the state and functionality of the app based on if the user is logged in
+  const handleLogin = () => {
+    if (isLoggedIn === false) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }
+
   return (
-    <Router>
     <div className="App">
-        <Routes>
-          <Route path="/" element={<Homepage />} />
-          <Route path="/login-signup" element={<LoginSignupPage />} />
-          <Route path="/create-item" element={<CreateItem />} />
-          <Route path="/edit-user/:name" element={<EditItem />} />
-          <Route path="/view-user/:name" element={<ViewItem />} render={(routeProps) => <ViewItem {...routeProps} {...props} />}/>
-        </Routes>
+      <Router>
+          <Routes>
+            <Route path="/" element={<Homepage login = {isLoggedIn} setLogin = {handleLogin} />} />
+            <Route path="/login-signup" element={<LoginSignupPage setLogin = {handleLogin}/>} />
+            <Route path="/create-item" element={<CreateItem />} />
+            <Route path="/edit-user/:name" element={<EditItem />} />
+            <Route path="/view-user/:name" element={<ViewItem />} render={(routeProps) => <ViewItem {...routeProps} {...props} />}/>
+          </Routes>
+        </Router>
     </div>
-    </Router>
+   
   );
 }
 

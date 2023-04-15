@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import Card from './Card';
 import './css/LoginSignupPage.css';
+import { useNavigate } from "react-router-dom";
 
-function LoginSignupPage() {
+
+function LoginSignupPage(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate(); // used to navigate back to homepage when a button is clicked
 
+
+// Updates the users input based on the input fields
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
   };
@@ -14,16 +19,28 @@ function LoginSignupPage() {
     setPassword(event.target.value);
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleLoginClick = (event) => {
     // perform login or signup logic here
+    const buttonClicked = event.target.name; //determines which button was clicked
+    console.log(`Button ${buttonClicked} was clicked.`);
+   if (buttonClicked === 'login') {
+      if (username === 'myusername' && password === 'mypassword') {
+        props.setLogin();
+        console.log("this is working?");
+        navigate("/");
+      } else {
+        alert('Invalid username or password');
+      } 
+    } else if (buttonClicked === 'useAsGuest') {
+      navigate("/");
+   } 
   };
 
   return (
     <div>
       <Card className="login-signup">
         <h1>User Login Page</h1>
-         <form onSubmit={handleSubmit}>
+         <form>
             <div className="form-field">
                 {/* <label htmlFor="username">Username:</label> */}
                 <input
@@ -46,9 +63,8 @@ function LoginSignupPage() {
             </div>
             <div className="">
               <div className="button-field">
-                <button className="pagebutton" type="submit">Use as Guest</button>
-                <button className="pagebutton" type="submit">Login</button>
-                <button className="pagebutton" type="submit">Signup</button>
+                <button className="pagebutton" name="useAsGuest" onClick={handleLoginClick}>Use as Guest</button>
+                <button className="pagebutton" name="login" onClick={handleLoginClick}>Login</button>    
             </div>
 
             </div>

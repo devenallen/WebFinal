@@ -1,9 +1,11 @@
 import './css/Homepage.css';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import Users from './Users';
 import { Link } from "react-router-dom";
+import LoginSignupPage from './LoginSignupPage';
+import EditItem from './EditItem';
 
-function Homepage() {
+function Homepage(props) {
     const [users, setUsers] = useState([
         {
         id: 'Hawks',
@@ -48,10 +50,18 @@ function Homepage() {
         numPlayers: 6,
         },
     ]);
-
+    
+ 
     function handleDeleteUser(userId) {
         setUsers(users.filter(user => user.id !== userId));
     }
+
+    // adds a team to the array
+    const addUserHandler = team => {
+        setUsers((prevUsers)=> {
+          return[team, ...prevUsers];
+        });
+    };
 
     function handleEditUser(userId, newName) {
         const updatedUsers = users.map(user => {
@@ -64,25 +74,45 @@ function Homepage() {
         setUsers(updatedUsers);
     }
 
+    // this is called when the user is logged in and clicks the sign out button, isLoggedIn value changes to false
+    const handleSignOut = (event) => {
+        props.setLogin();
+    }
+
+
+
     return (
         <div>
-            <Link to="/create-item">
-                <div className="button-container">
-                    <button className="create-button">Create Team</button>
-                </div>
-            </Link>
-            <div className="header">
-                <div className="header-center">
-                    <h1 className="header-title">Intramural League Builder</h1>
-                </div>
-                    <Link to="/login-signup">
-                        <button className="header-button">Login</button>
+            {props.login ? (
+                <div>
+                    <Link to="/create-item">
+                        <div className="button-container">
+                            <button className="create-button">Create Team</button>
+                        </div>
                     </Link>
-            </div>
-
-            <Users users={users} onDeleteUser={handleDeleteUser} onEditUser={handleEditUser} />
+                    <div className="header">
+                        <div className="header-center">
+                            <h1 className="header-title">Intramural League Builder</h1>
+                        </div>
+                            <button className="header-button" onClick={handleSignOut}>Sign Out</button> 
+                        </div>
+                    <Users users={users} onDeleteUser={handleDeleteUser} onEditUser={handleEditUser} />
+                </div>
+            ) : (
+                <div>
+                    <div className="header">
+                        <div className="header-center">
+                            <h1 className="header-title">Intramural League Builder</h1>
+                        </div>  
+                        <Link to="/login-signup">
+                            <button className="header-button">Login</button>
+                        </Link>
+                        </div>
+                <Users users={users} onDeleteUser={handleDeleteUser} onEditUser={handleEditUser} />
+                </div>
+            )}  
         </div>
-    );
+        );
 }
 
 export default Homepage;
