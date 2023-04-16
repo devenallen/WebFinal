@@ -1,57 +1,100 @@
-import './EditItem.css';
+import './css/EditItem.css';
 import { useState } from 'react';
 import Card from './Card';
+// import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function EditItem(props) {
-    const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+    const navigate = useNavigate();
+    const [teamname, setTeamname] = useState('');
+    const [numPlayers, setNumPlayers] = useState('');
+    const [captain, setCaptain] = useState('');
+    const [logo, setLogo] = useState('');
+    
+    const myID = new URLSearchParams(window.location.search).get('id');
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+    // teamname = props.teamname;
+    // numPlayers = props.numPlayers;
+    // captain = props.captain;
+    // logo = props.logo;
+  
+    const handleTeamnameChange = (event) => {
+      setTeamname(event.target.value);
+    };
+  
+    const handleNumPlayersChange = (event) => {
+      setNumPlayers(event.target.value);
+    };
+  
+    const handleCaptainChange = (event) => {
+      setCaptain(event.target.value);
+    };
+  
+    const handleLogoChange = (event) => {
+      setLogo(event.target.value);
+    };
+  
+    const handleSubmit = (event) => {
+      event.preventDefault();
+    
+      const updatedTeam = {
+        id: myID,
+        name: teamname,
+        numPlayers: numPlayers,
+        captain: captain,
+        logo: logo
+      };
 
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // perform login or signup logic here
-  };
-
+      props.handleEditTeam(updatedTeam);
+      navigate('/');
+    };
   
     return (
-        <div>
-      <Card className="login-signup">
-        <h1>User Login Page</h1>
-         <form onSubmit={handleSubmit}>
-            <div className="form-field">
-                {/* <label htmlFor="username">Username:</label> */}
+      <div>
+        <h1>Edit Hawks</h1>
+      <Card className="create-team">
+         <form className="overallform" onSubmit={handleSubmit}>
+            <div className="createform">
+                <label htmlFor="teamname">Team name: </label>
                 <input
-                    id="username"
-                    type="text"
-                    placeholder= "Username"
-                    value={username}
-                    onChange={handleUsernameChange}
+                    id="teamname"
+                    type="teamname"
+                    value={teamname}
+                    onChange={handleTeamnameChange}
                 />
             </div>
-            <div className="form-field">
-                {/* <label htmlFor="password">Password:</label> */}
+            <div className="createform">
+                <label htmlFor="numplayers">Number of Players: </label>
                 <input
-                    id="password"
-                    type="password"
-                    placeholder= "Password"
-                    value={password}
-                    onChange={handlePasswordChange}
+                    id="numplayers"
+                    type="numplayers"
+                    placeholder= ""
+                    value={numPlayers}
+                    onChange={handleNumPlayersChange}
                 />
             </div>
-            <div className="">
-              <div className="button-field">
-                <button className="pagebutton" type="submit">Use as Guest</button>
-                <button className="pagebutton" type="submit">Login</button>
-                <button className="pagebutton" type="submit">Signup</button>
+            <div className="createform">
+                <label htmlFor="captain">Team Captain: </label>
+                <input
+                    id="captain"
+                    type="captain"
+                    placeholder= ""
+                    value={captain}
+                    onChange={handleCaptainChange}
+                />
             </div>
-
+            <div className="createform">
+                <label htmlFor="logo">Logo: </label>
+                <input
+                    id="logo"
+                    type="logo"
+                    placeholder= ""
+                    value={logo}
+                    onChange={handleLogoChange}
+                />
+            </div>
+            <div className="save">
+                <button className="savebutton" onClick={handleSubmit} type="submit">Save</button>
             </div>
           </form> 
       </Card>

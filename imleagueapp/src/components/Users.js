@@ -1,40 +1,51 @@
-// import UserItem from './UserItem';
-// import Card from './Card';
-// import './Users.css';
-
-// function Users(props) {
-//     return (
-//         <Card className="users">
-//             {props.user_list.map(user => (
-//             <UserItem
-//                 key={user.id}
-//                 id={user.id}
-//                 name={user.name}
-//                 image={user.image}
-//         />
-//       ))}
-//     </Card>
-//     );
-//   }
-
-// export default Users;
-import './Users.css';
-import UserItem from './UserItem';
+import './css/Users.css';
+//import UserItem from './UserItem';
+import Card from './Card';
+import { Link } from 'react-router-dom';
+import './css/UserItem.css';
+import { useNavigate } from 'react-router-dom';
 
 function Users(props) {
-  function handleEditUser(userId, newName) {
-    props.onEditUser(userId, newName);
-  } // This may not be needed
+  const navigate = useNavigate();
+
+  // function handleEditUser(userId, newName) {
+  //   props.onEditUser(userId, newName);
+  // } // This may not be needed
+  function handleDeleteUser(username) {
+    props.onDeleteUser(username);
+
+    navigate('/');
+  }
+
+  // function handleEditUser(user) {
+  //   // Redirect to the edit user page for the selected user
+  //   // props.history.push(`/edit-user/${user.name}/${user.captain}/${user.numPlayers}}`);
+  //   props.onEditUser(user);
+  //   navigate('/');
+  // }
+
   return (
     <div className="users">
       {props.users.map((user) => (
-        <UserItem
-          key={user.id}
-          id={user.id}
-          name={user.name}
-          image={user.image}
-          onEditUser={handleEditUser} // This may not be needed
-        />
+        <Card className="user-item__content">
+          <div className="user-item__image">
+            <img src={user.image} alt={user.name} />
+          </div>
+        <div className="user-item__info">
+         <Link to={`/view-user/${user.name}/${user.captain}/${user.numPlayers}?${user.image}`} className="linkinfo">
+          <h2>{user.name}</h2>
+         </Link>
+         {props.login ? (
+          <div>
+         <button className="editbuttonsUI" type="button" onClick={() => handleDeleteUser(user.name)}>Delete Team</button>
+         <Link to={`/edit-user/${user.name}/${user.captain}/${user.numPlayers}?${user.image}?${user.id}`} className="linkinfo">
+          <button className="editbuttonsUI" type="button">Edit Team</button>
+          </Link>
+          </div>
+        ) : (
+          <div></div>)}
+        </div>
+      </Card>
       ))}
     </div>
   );

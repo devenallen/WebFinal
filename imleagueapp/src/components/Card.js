@@ -1,4 +1,4 @@
-import './Card.css';
+import './css/Card.css';
 
 //card as a default class always applied,
 //plus anything received from children as a className

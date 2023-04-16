@@ -1,8 +1,12 @@
 import { useState } from 'react';
 import Card from './Card';
-import './CreateItem.css';
+import './css/CreateItem.css';
+//import { Link } from "react-router-dom";
+//import Users from './Users';
+import { useNavigate } from 'react-router-dom';
 
-function CreateItem() {
+function CreateItem(props) {
+  const navigate = useNavigate();
   const [teamname, setTeamname] = useState('');
   const [numPlayers, setNumPlayers] = useState('');
   const [captain, setCaptain] = useState('');
@@ -26,7 +30,19 @@ function CreateItem() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // perform login or signup logic here
+    // perform login or signup logic here    
+    /* Create a new user with the values from the form below, then add that new user to the props.users*/
+    // <Users users={props.users} onDeleteUser={props.handleDeleteUser} onEditUser={props.handleEditUser} />
+    const newTeam = {
+      id: teamname,
+      name: teamname,
+      numPlayers: numPlayers,
+      captain: captain,
+      logo: logo
+    };
+
+    props.handleCreateTeam(newTeam);
+    navigate('/');
   };
 
   return (
@@ -74,7 +90,7 @@ function CreateItem() {
               />
           </div>
           <div className="button">
-            <button className="createbutton" type="submit">Create Team</button>
+              <button onClick={handleSubmit} className="createbutton" type="button">Create Team</button>
 
           </div>
         </form> 
