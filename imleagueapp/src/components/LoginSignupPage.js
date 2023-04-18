@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import Card from './Card';
 import './css/LoginSignupPage.css';
+import { useNavigate } from 'react-router-dom';
 
-function LoginSignupPage() {
+function LoginSignupPage(props) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleUsernameChange = (event) => {
     setUsername(event.target.value);
@@ -12,6 +14,21 @@ function LoginSignupPage() {
 
   const handlePasswordChange = (event) => {
     setPassword(event.target.value);
+  };
+
+  const handleLoginClick = (event) => {
+    const buttonClicked = event.target.name;
+    console.log(`Button ${buttonClicked} was clicked`);
+    if (buttonClicked === 'login' || buttonClicked === 'signup') {
+      if (username  === 'myusername' && password === 'mypassword') {
+        props.setLogin();
+        navigate('/');
+      } else {
+        alert('Invalid username or password');
+      }
+    } else if (buttonClicked === 'useAsGuest') {
+      navigate('/');
+    } 
   };
 
   const handleSubmit = (event) => {
@@ -46,9 +63,9 @@ function LoginSignupPage() {
             </div>
             <div className="">
               <div className="button-field">
-                <button className="pagebutton" type="submit">Use as Guest</button>
-                <button className="pagebutton" type="submit">Login</button>
-                <button className="pagebutton" type="submit">Signup</button>
+                <button className="pagebutton" name="useAsGuest" onClick={handleLoginClick}>Use as Guest</button>
+                <button className="pagebutton" name="login" onClick={handleLoginClick}>Login</button>
+                <button className="pagebutton" name="signup" onClick={handleLoginClick}>Signup</button>
             </div>
 
             </div>

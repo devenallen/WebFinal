@@ -1,13 +1,18 @@
 import './css/EditItem.css';
 import { useState } from 'react';
 import Card from './Card';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 function EditItem(props) {
+    const { name } = useParams();
+    const navigate = useNavigate();
     const [teamname, setTeamname] = useState('');
     const [numPlayers, setNumPlayers] = useState('');
     const [captain, setCaptain] = useState('');
     const [logo, setLogo] = useState('');
+    
+    const myID = new URLSearchParams(window.location.search).get('id');
   
     const handleTeamnameChange = (event) => {
       setTeamname(event.target.value);
@@ -27,12 +32,22 @@ function EditItem(props) {
   
     const handleSubmit = (event) => {
       event.preventDefault();
-      // perform login or signup logic here
+    
+      const updatedTeam = {
+        id: myID,
+        name: teamname,
+        numPlayers: numPlayers,
+        captain: captain,
+        logo: logo,
+      };
+
+      props.handleEditTeam(updatedTeam);
+      navigate('/');
     };
   
     return (
       <div>
-        <h1>Edit {teamname}</h1>
+        <h1>Edit {name}</h1>
       <Card className="create-team">
          <form className="overallform" onSubmit={handleSubmit}>
             <div className="createform">
@@ -68,16 +83,15 @@ function EditItem(props) {
                 <label htmlFor="logo">Logo: </label>
                 <input
                     id="logo"
-                    type="logo"
+                    type="url"
+                    alt="image"
                     placeholder= ""
                     value={logo}
                     onChange={handleLogoChange}
                 />
             </div>
             <div className="save">
-              <Link to="/">
-                <button className="savebutton" type="submit">Save</button>
-              </Link>
+                <button className="savebutton" onClick={handleSubmit} type="submit">Save</button>
             </div>
           </form> 
       </Card>
